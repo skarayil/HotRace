@@ -6,11 +6,12 @@
 /*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 18:21:24 by skarayil          #+#    #+#             */
-/*   Updated: 2026/09/12 18:42:11 by skarayil         ###   ########.fr       */
+/*   Updated: 2026/09/12 19:37:36 by skarayil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hotrace.h"
+#include <stdlib.h>
 
 static t_entry	*ft_find_entry(t_table *t, const char *key, size_t j)
 {

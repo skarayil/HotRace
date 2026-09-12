@@ -6,11 +6,12 @@
 /*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 16:26:41 by skarayil          #+#    #+#             */
-/*   Updated: 2026/09/12 18:43:28 by skarayil         ###   ########.fr       */
+/*   Updated: 2026/09/12 19:36:42 by skarayil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hotrace.h"
+#include <stdlib.h>
 
 int	main(void)
 {

@@ -6,11 +6,12 @@
 /*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 18:17:38 by skarayil          #+#    #+#             */
-/*   Updated: 2026/09/12 18:42:41 by skarayil         ###   ########.fr       */
+/*   Updated: 2026/09/12 19:38:01 by skarayil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hotrace.h"
+#include <stdlib.h>
 
 static t_entry	**ft_alloc_buckets(size_t size)
 {

@@ -6,11 +6,12 @@
 /*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 17:40:49 by skarayil          #+#    #+#             */
-/*   Updated: 2026/09/12 18:43:26 by skarayil         ###   ########.fr       */
+/*   Updated: 2026/09/12 19:36:56 by skarayil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hotrace.h"
+#include <stdlib.h>
 
 size_t	ft_hash_str(const char *key)
 {

@@ -6,11 +6,13 @@
 /*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 17:40:27 by skarayil          #+#    #+#             */
-/*   Updated: 2026/09/12 18:43:19 by skarayil         ###   ########.fr       */
+/*   Updated: 2026/09/12 19:37:03 by skarayil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hotrace.h"
+#include <stdbool.h>
+#include <stdlib.h>
 
 static bool	ft_buffer_init(t_buffer *buffer, size_t cap)
 {

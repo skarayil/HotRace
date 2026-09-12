@@ -6,15 +6,13 @@
 /*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 21:05:43 by skarayil          #+#    #+#             */
-/*   Updated: 2026/09/12 18:41:06 by skarayil         ###   ########.fr       */
+/*   Updated: 2026/09/12 18:44:13 by skarayil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HOTRACE_H
 # define HOTRACE_H
 
-# include <stdbool.h>
-# include <stdlib.h>
 # include <unistd.h>
 
 typedef struct s_entry
