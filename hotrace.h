@@ -6,7 +6,7 @@
 /*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 21:05:43 by skarayil          #+#    #+#             */
-/*   Updated: 2026/09/11 21:07:17 by skarayil         ###   ########.fr       */
+/*   Updated: 2026/09/12 16:38:46 by skarayil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,15 @@ void				ft_putstr_fd(const char *s, int fd);
 void				ft_putchar_fd(char c, int fd);
 
 /* read */
-
+t_table	*table_create(size_t size);
+void	table_free(t_table *t);
+void	pars_pairs(t_table *table, char *input, char **end);
 
 /* hash.c */
-
+void	process_queries(t_table *table, char *cursor);
+char	*read_all(int fd);
+char	*table_search(t_table *t, const char *key);
+void	table_insert(t_table *t, char *key, char *value);
 
 /* hotrace.c */
 

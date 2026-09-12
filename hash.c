@@ -1,159 +1,160 @@
-/* *********************************************************************** */
-/*                                                                         */
-/*                                                     :::      ::::::::   */
-/* hash.c                                            :+:      :+:    :+:   */
-/*                                                 +:+ +:+         +:+     */
-/* By: ksener <ksener@student.42kocaeli.com.tr   +#+  +:+       +#+        */
-/*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/09/12 15:44:15 by ksener          #+#    #+#              */
-/* Updated: 2026/09/12 16:16:10 by ksener          ###   ########.fr       */
-/*                                                                         */
-/* *********************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hash.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/12 16:39:20 by skarayil          #+#    #+#             */
+/*   Updated: 2026/09/12 16:39:22 by skarayil         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "hotrace.h"
 
-t_table *table_create(size_t size)
+static size_t	hash_str(const char *key)
 {
-    t_table *t;
-    size_t  i;
+	size_t	h;
+	size_t	i;
 
-    t = malloc(sizeof(t_table));
-    if (!t)
-        return NULL;
-    t->buckets = malloc(sizeof(t_entry *) * size);
-    if (!t->buckets)
-    {
-        free(t);
-        return NULL;
-    }
-    i = 0;
-    while(i < size)
-    {
-        t->buckets[i] = NULL;
-        i++;
-    }
-    t->size = size;
-    t->count = 0;
-    return (t);
+	h = (size_t)14695981039346656037ULL;
+	i = 0;
+	while (key[i])
+	{
+		h ^= (unsigned char)key[i];
+		h *= (size_t)1099511628211ULL;
+		i++;
+	}
+	return (h);
 }
 
-static size_t hash_str(const char *key)
+t_table	*table_create(size_t size)
 {
-    size_t i;
-    size_t h;
+	t_table	*t;
+	size_t	i;
 
-    h = (size_t)14695981039346656037ULL;
-    i = 0;
-    while(key[i])
-    {
-        h ^= (unsigned char)key[i];
-        h *= (size_t)1099511628211ULL;
-        i++;
-    }
-    return (h);
+	t = malloc(sizeof(t_table));
+	if (!t)
+		return (NULL);
+	t->buckets = malloc(sizeof(t_entry *) * size);
+	if (!t->buckets)
+	{
+		free(t);
+		return (NULL);
+	}
+	i = 0;
+	while (i < size)
+	{
+		t->buckets[i] = NULL;
+		i++;
+	}
+	t->size = size;
+	t->count = 0;
+	return (t);
 }
 
-char    *table_search(t_table *t, const char *key)
+static void	table_resize(t_table *t)
 {
-    size_t  i;
-    t_entry *e;
-    if (!t || !key)
-        return (NULL);
-    i = hash_str(key) & (t->size - 1);
-    e = t->buckets[i];
-    while (e)
-    {
-        if (ft_str_cmp(e->key, key) == 0)
-            return e->value;
-        e = e->next;
-    }
-    return NULL;
+	size_t	new_size;
+	t_entry	**new_buckets;
+	t_entry	*e;
+	t_entry	*next;
+	size_t	i;
+
+	new_size = t->size * 2;
+	new_buckets = malloc(sizeof(t_entry *) * new_size);
+	if (!new_buckets)
+		return ;
+	i = 0;
+	while (i < new_size)
+		new_buckets[i++] = NULL;
+	i = 0;
+	while (i < t->size)
+	{
+		e = t->buckets[i];
+		while (e)
+		{
+			next = e->next;
+			size_t idx = hash_str(e->key) & (new_size - 1);
+			e->next = new_buckets[idx];
+			new_buckets[idx] = e;
+			e = next;
+		}
+		i++;
+	}
+	free(t->buckets);
+	t->buckets = new_buckets;
+	t->size = new_size;
 }
 
-void    table_free(t_table *t)
+void	table_insert(t_table *t, char *key, char *value)
 {
-    size_t  i;
-    t_entry e;
-    t_entry next;
-    if (!t)
-        return ;
-    i = 0;
-    while (i < t->size)
-    {
-        e = t->buckets[i];
-        while (e)
-        {
-            next = e->next;
-            free(e);
-            e = next;
-        }
-        i++;
-    }
-    free(t->buckets)
-    free(t)
+	size_t	idx;
+	t_entry	*e;
+
+	if (!t || !key || !value)
+		return ;
+	idx = hash_str(key) & (t->size - 1);
+	e = t->buckets[idx];
+	while (e)
+	{
+		if (ft_strcmp(e->key, key) == 0)
+		{
+			e->value = value;
+			return ;
+		}
+		e = e->next;
+	}
+	e = malloc(sizeof(t_entry));
+	if (!e)
+		return ;
+	e->key = key;
+	e->value = value;
+	e->next = t->buckets[idx];
+	t->buckets[idx] = e;
+	t->count++;
+	if (t->count > t->size * 3 / 4)
+		table_resize(t);
 }
 
-
-static void table_resize(t_table t)
+char	*table_search(t_table *t, const char *key)
 {
-    size_t  new_size;
-    t_entry **new_buckets;
-    t_entry e;
-    t_entry next;
-    size_t  i;
-    size_t  j;
+	size_t	idx;
+	t_entry	*e;
 
-    new_size = t->size * 2;
-    new_buckets = malloc(sizeof(t_entry *) * new_size);
-    if !new_buckets
-        return ;
-    i = 0;
-    while (i < new_size)
-        new_buckets[i++] = NULL;
-    i = 0;
-    while (i < t_size)
-    {
-        e = t->backets[i];
-        while (e)
-        {
-            next = e->next;
-            j = hash_str(e->key) & (new_size -1);
-            e->next = new_buckets[j];
-            new_buckets[j] = e;
-            e = next;
-        }
-        i++;
-    }
-    free(t->buckets);
-    t->buckets = new_buckets;
-    t->size = new_size;
+	if (!t || !key)
+		return (NULL);
+	idx = hash_str(key) & (t->size - 1);
+	e = t->buckets[idx];
+	while (e)
+	{
+		if (ft_strcmp(e->key, key) == 0)
+			return (e->value);
+		e = e->next;
+	}
+	return (NULL);
 }
 
-void table_insert(t_table t, char *key,char *value)
+void	table_free(t_table *t)
 {
-    size_t i;
-    t_entry e;
-    if(!t || !key || !value)
-        return ;
-    i = hash_str(key) & (t->size - 1);
-    e = t->buckets[i];
-    while (e)
-    {
-        if (ft_strcmp(e->key, key) == 0)
-        {
-            e->value = value;
-            return ;
-        }
-        e = e->next;
-    }
-    e = malloc(sizeof(t_entry));
-    if (!e)
-        return ;
-    e->key = key;
-    e->value = value;
-    e->next = t->buckets[i];
-    t->buckets[i] = e;
-    t->count++;
-    if (t->count > t->size * 3 / 4)
-        table_resize(t);
-    
+	size_t	i;
+	t_entry	*e;
+	t_entry	*next;
+
+	if (!t)
+		return ;
+	i = 0;
+	while (i < t->size)
+	{
+		e = t->buckets[i];
+		while (e)
+		{
+			next = e->next;
+			free(e);
+			e = next;
+		}
+		i++;
+	}
+	free(t->buckets);
+	free(t);
 }

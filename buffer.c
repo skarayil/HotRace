@@ -13,80 +13,76 @@
 #include "hotrace.h"
 #include <stdlib.h>
 
-int buffer_init(t_buffer *buffer, size_t cap)
+int	buffer_init(t_buffer *buffer, size_t cap)
 {
-    buffer->data = malloc(cap);
-    if (buffer->data == NULL)
-        return 0;
-    buffer->len = 0;
-    buffer->cap = cap;
-    return (1);
+	buffer->data = malloc(cap);
+	if (buffer->data == NULL)
+		return (0);
+	buffer->len = 0;
+	buffer->cap = cap;
+	return (1);
 }
 
-
-int buffer_grow(t_buffer buffer)
+int	buffer_grow(t_buffer *buffer)
 {
-    char    *new_data;
-    size_t  new_cap;
-    size_t  i;
+	char	*new_data;
+	size_t	new_cap;
+	size_t	i;
 
-    i = 0;
-    new_cap = buffer->cap * 2;
-    new_data = malloc(new_cap)
-    if (!new_data)
-        return 0;
-    while (i < buffer->len)
-    {
-        new_data[i] = buffer->data[i];
-        i++;
-    }
-    free(buffer->data);
-    buffer->data = new_data;
-    buffer->cap = new_cap;
-    return (1);
+	i = 0;
+	new_cap = buffer->cap * 2;
+	new_data = malloc(new_cap) if (!new_data) return (0);
+	while (i < buffer->len)
+	{
+		new_data[i] = buffer->data[i];
+		i++;
+	}
+	free(buffer->data);
+	buffer->data = new_data;
+	buffer->cap = new_cap;
+	return (1);
 }
 
-
-int buffer_append(t_buffer buffer, const char *src, size_t n)
+int	buffer_append(t_buffer *buffer, const char *src, size_t n)
 {
-    size_t  i;
-    while(buffer->len + n + 1 > buffer->cap)
-    {
-        if (!(buffer_grow(buffer)))
-            return (0);
-    }
-    i = 0;
-    while(i < n)
-    {
-        buffer->data[buf->len + i] = src[i];
-        i++;
-    }
-    buffer->len += n;
-    buffer->data[buffer->len] = '\0';
-    return (1);
+	size_t	i;
+
+	while (buffer->len + n + 1 > buffer->cap)
+	{
+		if (!(buffer_grow(buffer)))
+			return (0);
+	}
+	i = 0;
+	while (i < n)
+	{
+		buffer->data[buf->len + i] = src[i];
+		i++;
+	}
+	buffer->len += n;
+	buffer->data[buffer->len] = '\0';
+	return (1);
 }
 
-
-char *read_all(int fd)
+char	*read_all(int fd)
 {
-    t_buffer buffer;
-    char    chank[4096];
-    size_t  n;
+	t_buffer buffer;
+	char chank[4096];
+	size_t n;
 
-    if (!(buffer_init(&buffer, 4096)))
-        return (NULL);
-    while ((n=read(fd, chank, sizeof(chank))) > 0)
-    {
-        if(!buffer_append(&buffer, chank, n))
-        {
-            free(buffer.data);
-            return (NULL);
-        }
-    }
-    if (n < 0)
-    {
-        free(buffer.data);
-        return NULL;
-    }
-    return buff.data;
+	if (!(buffer_init(&buffer, 4096)))
+		return (NULL);
+	while ((n = read(fd, chank, sizeof(chank))) > 0)
+	{
+		if (!buffer_append(&buffer, chank, n))
+		{
+			free(buffer.data);
+			return (NULL);
+		}
+	}
+	if (n < 0)
+	{
+		free(buffer.data);
+		return (NULL);
+	}
+	return (buff.data);
 }
