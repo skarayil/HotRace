@@ -30,6 +30,12 @@ typedef struct s_table
 	size_t			count;
 }					t_table;
 
+typedef struct s_buffer
+{
+	char *			data;
+	size_t			len;
+	size_t			cap;
+}					t_buffer;
 /* libft.c */
 size_t				ft_strlen(const char *s);
 int					ft_strcmp(const char *a, const char *b);
