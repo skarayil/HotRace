@@ -6,7 +6,7 @@
 /*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 17:40:27 by skarayil          #+#    #+#             */
-/*   Updated: 2026/09/12 19:37:03 by skarayil         ###   ########.fr       */
+/*   Updated: 2026/09/12 22:32:32 by skarayil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static bool	ft_buffer_append(t_buffer *buffer, const char *src, size_t n)
 char	*ft_read_all(int fd)
 {
 	t_buffer	buffer;
-	char		chunk[4096];
+	char		chunk[65536];
 	ssize_t		n;
 
 	if (!ft_buffer_init(&buffer, 4096))

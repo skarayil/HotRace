@@ -6,13 +6,13 @@
 /*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 21:06:21 by skarayil          #+#    #+#             */
-/*   Updated: 2026/09/12 19:37:38 by skarayil         ###   ########.fr       */
+/*   Updated: 2026/09/12 22:43:05 by skarayil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hotrace.h"
 
-static size_t	ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
 	size_t	len;
 

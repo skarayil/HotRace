@@ -6,26 +6,47 @@
 /*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 17:40:49 by skarayil          #+#    #+#             */
-/*   Updated: 2026/09/12 19:36:56 by skarayil         ###   ########.fr       */
+/*   Updated: 2026/09/12 22:50:01 by skarayil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hotrace.h"
 #include <stdlib.h>
 
+static unsigned long	ft_load_mix(const char *p)
+{
+	unsigned long	v;
+
+	__builtin_memcpy(&v, p, 8);
+	v *= 0x9E3779B97F4A7C15UL;
+	return ((v << 31) | (v >> 33));
+}
+
 size_t	ft_hash_str(const char *key)
 {
-	size_t	h;
-	size_t	i;
+	size_t			len;
+	size_t			i;
+	unsigned long	h;
 
-	h = (size_t)14695981039346656037ULL;
+	len = ft_strlen(key);
 	i = 0;
-	while (key[i])
+	h = 0x9E3779B97F4A7C15UL + len;
+	while (i + 8 <= len)
+	{
+		h ^= ft_load_mix(key + i);
+		h = (h << 27) | (h >> 37);
+		h = h * 0xBF58476D1CE4E5B9UL + 0x94D049BB133111EBUL;
+		i += 8;
+	}
+	while (i < len)
 	{
 		h ^= (unsigned char)key[i];
-		h *= (size_t)1099511628211ULL;
+		h *= 0x100000001B3UL;
 		i++;
 	}
+	h ^= h >> 33;
+	h *= 0xFF51AFD7ED558CCDUL;
+	h ^= h >> 29;
 	return (h);
 }
 

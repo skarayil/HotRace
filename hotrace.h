@@ -6,7 +6,7 @@
 /*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 21:05:43 by skarayil          #+#    #+#             */
-/*   Updated: 2026/09/12 18:44:13 by skarayil         ###   ########.fr       */
+/*   Updated: 2026/09/12 22:44:25 by skarayil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,15 @@ typedef struct s_buffer
 	size_t			cap;
 }					t_buffer;
 
+typedef struct s_hash
+{
+	size_t			len;
+	size_t			i;
+	unsigned long	h;
+}					t_hash;
+
 int					ft_strcmp(const char *a, const char *b);
+size_t				ft_strlen(const char *s);
 char				*ft_table_search(t_table *t, const char *key);
 char				*ft_read_all(int fd);
 t_table				*ft_table_create(size_t size);

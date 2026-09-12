@@ -1,6 +1,6 @@
 NAME		= hotrace
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -O2
 SRCS		= hotrace.c hash.c libft.c parser.c buffer.c resize.c insert.c
 OBJS		= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 OBJ_DIR		= obj

@@ -6,7 +6,7 @@
 /*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 16:26:41 by skarayil          #+#    #+#             */
-/*   Updated: 2026/09/12 19:36:42 by skarayil         ###   ########.fr       */
+/*   Updated: 2026/09/12 22:34:48 by skarayil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(void)
 	input = ft_read_all(0);
 	if (!input)
 		return (1);
-	table = ft_table_create(1024);
+	table = ft_table_create(262144);
 	if (!table)
 	{
 		free(input);
