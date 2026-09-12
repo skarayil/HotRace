@@ -14,4 +14,5 @@ int	main(void)
 		free(input);
 		return (1);
 	}
+    parse_pairs(table, input, &cursor);
 }
