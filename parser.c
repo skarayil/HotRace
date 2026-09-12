@@ -1,18 +1,18 @@
-/* *********************************************************************** */
-/*                                                                         */
-/*                                                     :::      ::::::::   */
-/* parser.c                                          :+:      :+:    :+:   */
-/*                                                 +:+ +:+         +:+     */
-/* By: ksener <ksener@student.42kocaeli.com.tr   +#+  +:+       +#+        */
-/*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/09/12 15:44:13 by ksener          #+#    #+#              */
-/* Updated: 2026/09/12 16:24:17 by ksener          ###   ########.fr       */
-/*                                                                         */
-/* *********************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/12 17:40:41 by skarayil          #+#    #+#             */
+/*   Updated: 2026/09/12 18:35:16 by skarayil         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "hotrace.h"
 
-char	*next_line(char **cursor)
+static char	*ft_next_line(char **cursor)
 {
 	char	*line;
 	char	*p;
@@ -32,7 +32,7 @@ char	*next_line(char **cursor)
 	return (line);
 }
 
-void	pars_pairs(t_table *table, char *input, char **end)
+void	ft_parse_pairs(t_table *table, char *input, char **end)
 {
 	char	*cursor;
 	char	*key;
@@ -41,30 +41,31 @@ void	pars_pairs(t_table *table, char *input, char **end)
 	cursor = input;
 	while (1)
 	{
-		key = next_line(&cursor);
+		key = ft_next_line(&cursor);
 		if (!key || *key == '\0')
 			break ;
-		value = next_line(&cursor);
+		value = ft_next_line(&cursor);
 		if (!value)
 			break ;
-		table_insert(table, key, value);
+		ft_table_insert(table, key, value);
 	}
 	if (end)
 		*end = cursor;
 }
 
-void	process_queries(t_table *table, char *cursor)
+void	ft_process_queries(t_table *table, char *cursor)
 {
-	char *query;
-	char *res;
+	char	*query;
+	char	*res;
+
 	while (1)
 	{
-		query = next_line(&cursor);
+		query = ft_next_line(&cursor);
 		if (!query)
 			break ;
 		if (*query == '\0')
 			continue ;
-		res = table_search(table, query);
+		res = ft_table_search(table, query);
 		if (res)
 		{
 			ft_putstr_fd(res, 1);

@@ -1,19 +1,19 @@
-/* *********************************************************************** */
-/*                                                                         */
-/*                                                     :::      ::::::::   */
-/* buffer.c                                          :+:      :+:    :+:   */
-/*                                                 +:+ +:+         +:+     */
-/* By: ksener <ksener@student.42kocaeli.com.tr   +#+  +:+       +#+        */
-/*                                             +#+#+#+#+#+   +#+           */
-/* Created: 2026/09/12 15:34:34 by ksener          #+#    #+#              */
-/* Updated: 2026/09/12 15:34:37 by ksener          ###   ########.fr       */
-/*                                                                         */
-/* *********************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   buffer.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/12 17:40:27 by skarayil          #+#    #+#             */
+/*   Updated: 2026/09/12 18:32:29 by skarayil         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "hotrace.h"
 #include <stdlib.h>
 
-int	buffer_init(t_buffer *buffer, size_t cap)
+static int	ft_buffer_init(t_buffer *buffer, size_t cap)
 {
 	buffer->data = malloc(cap);
 	if (buffer->data == NULL)
@@ -23,7 +23,7 @@ int	buffer_init(t_buffer *buffer, size_t cap)
 	return (1);
 }
 
-int	buffer_grow(t_buffer *buffer)
+static int	ft_buffer_grow(t_buffer *buffer)
 {
 	char	*new_data;
 	size_t	new_cap;
@@ -45,13 +45,13 @@ int	buffer_grow(t_buffer *buffer)
 	return (1);
 }
 
-int	buffer_append(t_buffer *buffer, const char *src, size_t n)
+static int	ft_buffer_append(t_buffer *buffer, const char *src, size_t n)
 {
 	size_t	i;
 
 	while (buffer->len + n + 1 > buffer->cap)
 	{
-		if (!(buffer_grow(buffer)))
+		if (!(ft_buffer_grow(buffer)))
 			return (0);
 	}
 	i = 0;
@@ -65,26 +65,29 @@ int	buffer_append(t_buffer *buffer, const char *src, size_t n)
 	return (1);
 }
 
-char	*read_all(int fd)
+char	*ft_read_all(int fd)
 {
-	t_buffer buffer;
-	char	chunk[4096];
-	ssize_t	n;
+	t_buffer	buffer;
+	char		chunk[4096];
+	ssize_t		n;
 
-	if (!(buffer_init(&buffer, 4096)))
+	if (!ft_buffer_init(&buffer, 4096))
 		return (NULL);
-	while ((n = read(fd, chunk, sizeof(chunk))) > 0)
+	while (1)
 	{
-		if (!buffer_append(&buffer, chunk, (size_t)n))
+		n = read(fd, chunk, sizeof(chunk));
+		if (n < 0)
 		{
 			free(buffer.data);
 			return (NULL);
 		}
-	}
-	if (n < 0)
-	{
-		free(buffer.data);
-		return (NULL);
+		if (n == 0)
+			break ;
+		if (!ft_buffer_append(&buffer, chunk, (size_t)n))
+		{
+			free(buffer.data);
+			return (NULL);
+		}
 	}
 	return (buffer.data);
 }
