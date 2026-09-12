@@ -6,24 +6,23 @@
 /*   By: skarayil <skarayil@student.42kocaeli>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 17:40:27 by skarayil          #+#    #+#             */
-/*   Updated: 2026/09/12 18:32:29 by skarayil         ###   ########.fr       */
+/*   Updated: 2026/09/12 18:43:19 by skarayil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hotrace.h"
-#include <stdlib.h>
 
-static int	ft_buffer_init(t_buffer *buffer, size_t cap)
+static bool	ft_buffer_init(t_buffer *buffer, size_t cap)
 {
 	buffer->data = malloc(cap);
 	if (buffer->data == NULL)
-		return (0);
+		return (false);
 	buffer->len = 0;
 	buffer->cap = cap;
-	return (1);
+	return (true);
 }
 
-static int	ft_buffer_grow(t_buffer *buffer)
+static bool	ft_buffer_grow(t_buffer *buffer)
 {
 	char	*new_data;
 	size_t	new_cap;
@@ -33,7 +32,7 @@ static int	ft_buffer_grow(t_buffer *buffer)
 	new_cap = buffer->cap * 2;
 	new_data = malloc(new_cap);
 	if (!new_data)
-		return (0);
+		return (false);
 	while (i < buffer->len)
 	{
 		new_data[i] = buffer->data[i];
@@ -42,17 +41,17 @@ static int	ft_buffer_grow(t_buffer *buffer)
 	free(buffer->data);
 	buffer->data = new_data;
 	buffer->cap = new_cap;
-	return (1);
+	return (true);
 }
 
-static int	ft_buffer_append(t_buffer *buffer, const char *src, size_t n)
+static bool	ft_buffer_append(t_buffer *buffer, const char *src, size_t n)
 {
 	size_t	i;
 
 	while (buffer->len + n + 1 > buffer->cap)
 	{
-		if (!(ft_buffer_grow(buffer)))
-			return (0);
+		if (!ft_buffer_grow(buffer))
+			return (false);
 	}
 	i = 0;
 	while (i < n)
@@ -62,7 +61,7 @@ static int	ft_buffer_append(t_buffer *buffer, const char *src, size_t n)
 	}
 	buffer->len += n;
 	buffer->data[buffer->len] = '\0';
-	return (1);
+	return (true);
 }
 
 char	*ft_read_all(int fd)
