@@ -31,7 +31,9 @@ int	buffer_grow(t_buffer *buffer)
 
 	i = 0;
 	new_cap = buffer->cap * 2;
-	new_data = malloc(new_cap) if (!new_data) return (0);
+	new_data = malloc(new_cap);
+	if (!new_data)
+		return (0);
 	while (i < buffer->len)
 	{
 		new_data[i] = buffer->data[i];
@@ -55,7 +57,7 @@ int	buffer_append(t_buffer *buffer, const char *src, size_t n)
 	i = 0;
 	while (i < n)
 	{
-		buffer->data[buf->len + i] = src[i];
+		buffer->data[buffer->len + i] = src[i];
 		i++;
 	}
 	buffer->len += n;
@@ -66,14 +68,14 @@ int	buffer_append(t_buffer *buffer, const char *src, size_t n)
 char	*read_all(int fd)
 {
 	t_buffer buffer;
-	char chank[4096];
-	size_t n;
+	char	chunk[4096];
+	ssize_t	n;
 
 	if (!(buffer_init(&buffer, 4096)))
 		return (NULL);
-	while ((n = read(fd, chank, sizeof(chank))) > 0)
+	while ((n = read(fd, chunk, sizeof(chunk))) > 0)
 	{
-		if (!buffer_append(&buffer, chank, n))
+		if (!buffer_append(&buffer, chunk, (size_t)n))
 		{
 			free(buffer.data);
 			return (NULL);
@@ -84,5 +86,5 @@ char	*read_all(int fd)
 		free(buffer.data);
 		return (NULL);
 	}
-	return (buff.data);
+	return (buffer.data);
 }

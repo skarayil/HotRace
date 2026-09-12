@@ -1,16 +1,10 @@
-naz
-sude
+apple
+red
+banana
+yellow
+grep
+green
 
-keyword-2
-value-2
-keyword-3
-
---input--
-keyword-1
-keyword-2
-keyword-3
-
--- output--
-value-1
-value-2
-keyword-3 not found
+apple
+banana
+cherry

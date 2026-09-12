@@ -49,6 +49,8 @@ void	pars_pairs(t_table *table, char *input, char **end)
 			break ;
 		table_insert(table, key, value);
 	}
+	if (end)
+		*end = cursor;
 }
 
 void	process_queries(t_table *table, char *cursor)

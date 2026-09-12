@@ -13,7 +13,7 @@
 NAME = hotrace
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = hotrace.c hash.c libft.c
+SRCS = hotrace.c hash.c libft.c parser.c buffer.c
 OBJS = $(SRCS:.c=.o)
 HEADERS = hotrace.h
 

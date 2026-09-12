@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "hotrace.h"
 
 int	main(void)
@@ -28,6 +27,7 @@ int	main(void)
 		free(input);
 		return (1);
 	}
+	cursor = NULL;
 	pars_pairs(table, input, &cursor);
 	process_queries(table, cursor);
 	table_free(table);
