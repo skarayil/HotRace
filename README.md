@@ -19,7 +19,7 @@
 
 ## 🎯 Projenin Amacı
 
-<img align="right" alt="Hotrace Animation" width="300" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnBreWp5N2NleG90dTN3Z3JrcHNvMnE3dmUyZTgybXd6aTUwcGx2ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/11ZSwQNWba4YF2/giphy.gif">
+<img align="right" alt="Hotrace Animation" width="300" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmg4cXZ3MHp0cnQ5bWpjazc3MmVnNzBidnNiOHkyaTFmOXg1a241ciZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/PNMTZvaduN9q1YKp0P/giphy.gif">
 
 Bu proje, bir **rush** projesi olarak, çok büyük girdilerle çalışan ve **hız** odaklı bir arama programı yazmayı amaçlamaktadır. Program iki bölümden oluşan bir girdi alır: önce `anahtar` / `değer` çiftleri, ardından boş bir satır ve sonrasında sorgulanacak anahtarlar. Her sorgu için değer ya da `Not found` mesajı yazdırılır.
 
